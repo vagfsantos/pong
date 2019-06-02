@@ -1,0 +1,22 @@
+{
+  "name": "pong",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel ./app/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vagfsantos/pong.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vagfsantos/pong/issues"
+  },
+  "homepage": "https://github.com/vagfsantos/pong#readme",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.3"
+  }
+}
