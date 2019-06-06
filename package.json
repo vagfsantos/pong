@@ -10,12 +10,15 @@
     "type": "git",
     "url": "git+https://github.com/vagfsantos/pong.git"
   },
-  "author": "",
+  "author": "Vagner Santos",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/vagfsantos/pong/issues"
   },
   "homepage": "https://github.com/vagfsantos/pong#readme",
+  "dependencies": {
+    "play2d": "https://github.com/vagfsantos/PLAY2D.git"
+  },
   "devDependencies": {
     "parcel-bundler": "^1.12.3"
   }
