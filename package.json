@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "parcel ./app/index.html"
+    "start": "parcel ./app/index.html",
+    "lint": "prettier --check 'app/**/*.js'"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,7 @@
     "play2d": "https://github.com/vagfsantos/PLAY2D.git"
   },
   "devDependencies": {
-    "parcel-bundler": "^1.12.3"
+    "parcel-bundler": "^1.12.3",
+    "prettier": "^1.18.2"
   }
 }
