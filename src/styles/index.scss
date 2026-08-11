@@ -1,0 +1,28 @@
+@use 'sass:color';
+
+$color-primary: #9b4646;
+$color-highlight: #d9dd2a;
+$color-light: #ffffff;
+$color-dark: #000000;
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: $color-primary;
+  color: $color-light;
+}
+
+#canvas-placeholder {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  canvas {
+    border: 2px solid color.adjust($color-primary, $lightness: -5%);
+  }
+}
