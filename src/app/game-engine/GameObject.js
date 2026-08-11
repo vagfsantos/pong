@@ -64,6 +64,11 @@ export class GameObject extends GameObjectEvent {
     this.y = y || this.y
   }
 
+  setSizes({ width, height }) {
+    this.width = width || this.width
+    this.height = height || this.height
+  }
+
   update() {
     if (this.type === 'dynamic')
       throw new Error(
@@ -74,4 +79,8 @@ export class GameObject extends GameObjectEvent {
   render() {
     throw new Error(`Method render not implemented on: ${this.name}`)
   }
+}
+
+export class GameObjectText extends GameObject {
+  type = GAME_OBJECT_TYPES.STATIC
 }
