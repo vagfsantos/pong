@@ -16,13 +16,15 @@ export class PongStartScreen {
     fontColor: COLORS.LIGHT,
   })
 
-  _onStart = () => {}
+  _onStart = () => {
+    throw new Error('No callback given to onClickStart')
+  }
 
   onClickStart(callback) {
     this._onStart = callback
   }
 
-  show({ gameCanvas }) {
+  show() {
     const titleMarginLeft = 165
     const titleMarginTop = 194
 
@@ -38,11 +40,6 @@ export class PongStartScreen {
     this.startBtn.setSizes({ width: 150, height: 30 })
 
     this._setupEvents()
-    this.startBtn.watchForEvents({ DOMElement: gameCanvas })
-  }
-
-  clean() {
-    throw Error('WIP')
   }
 
   getScreenGameObjects() {

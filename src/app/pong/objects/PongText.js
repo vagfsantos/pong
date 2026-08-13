@@ -20,8 +20,6 @@ export class PongText extends GameObject {
     ctx.font = `${this.fontSize}px ${FONTS.PRIMARY}`
     ctx.textBaseline = 'top'
 
-    ctx.strokeRect(this.x, this.y, this.width, this.height)
-
     ctx.fillText(this.text, this.x, this.y)
   }
 }

@@ -1,4 +1,26 @@
 export class GameRenderEngine {
+  gameObjectsList = []
+
+  addGameObject({ gameObject }) {
+    const isGameObjectAlreadyAdded = this.gameObjectsList.find(
+      ({ name }) => name === gameObject.name
+    )
+
+    if (isGameObjectAlreadyAdded) {
+      throw new Error(
+        `Game object with name: ${gameObject.name} is} already added`
+      )
+    }
+
+    this.gameObjectsList.push(gameObject)
+  }
+
+  removeGameObject({ gameObject }) {
+    this.gameObjectsList = this.gameObjectsList.filter(
+      ({ name }) => name !== gameObject.name
+    )
+  }
+
   clean({ gameCanvas }) {
     gameCanvas
       .getCanvasContext()
@@ -10,24 +32,23 @@ export class GameRenderEngine {
       )
   }
 
-  update({ gameCanvas, gameObjectsList }) {
-    gameObjectsList.forEach((gameObject) => {
+  update({ gameCanvas }) {
+    this.gameObjectsList.forEach((gameObject) => {
       gameObject.update({ gameCanvas })
     })
   }
 
-  render({ gameCanvas, gameObjectsList }) {
+  render({ gameCanvas }) {
     this.clean({ gameCanvas })
-    this.update({ gameCanvas, gameObjectsList })
+    this.update({ gameCanvas })
 
-    gameObjectsList.forEach((gameObject) => {
+    this.gameObjectsList.forEach((gameObject) => {
       gameObject.render({ gameCanvas })
     })
 
     window.requestAnimationFrame(() => {
       this.render({
         gameCanvas,
-        gameObjectsList,
       })
     })
   }

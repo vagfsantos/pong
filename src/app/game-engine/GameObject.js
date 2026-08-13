@@ -7,6 +7,8 @@ class GameObjectEvent {
   events = {
     mousemove: [],
     click: [],
+    keyup: [],
+    keydown: [],
   }
 
   onEvent({ name, callback }) {
