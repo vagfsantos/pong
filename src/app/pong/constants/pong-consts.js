@@ -13,3 +13,7 @@ export const COLORS = {
 export const FONTS = {
   PRIMARY: 'Rubik Mono One, monospace',
 }
+
+export const BALL = {
+  RADIUS: 10,
+}
