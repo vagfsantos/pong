@@ -14,6 +14,11 @@ export class PongController {
   StartScreen = new PongStartScreen()
   MatchScreen = new PongMatchScreen()
 
+  gameScore = {
+    player: 0,
+    machine: 0,
+  }
+
   init() {
     this._setupGame()
     this._setupInitialScreen()
@@ -52,6 +57,14 @@ export class PongController {
     this.MatchScreen.getScreenGameObjects().forEach((gameObject) => {
       this.GameRenderEngine.addGameObject({ gameObject })
       gameObject.watchForEvents({ gameCanvas: this.Canvas.getCanvas() })
+    })
+
+    this.MatchScreen.onScore(({ scoreOwner }) => {
+      this.gameScore[scoreOwner] = this.gameScore[scoreOwner] + 1
+      this.MatchScreen.updateScore({
+        player: this.gameScore.player,
+        machine: this.gameScore.machine,
+      })
     })
   }
 

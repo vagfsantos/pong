@@ -12,14 +12,17 @@ export class PongText extends GameObject {
     this.fontColor = fontColor
   }
 
+  setText(text) {
+    this.text = text
+  }
+
   render({ gameCanvas }) {
     const ctx = gameCanvas.getCanvasContext()
 
     ctx.fillStyle = this.fontColor
-    ctx.fill()
     ctx.font = `${this.fontSize}px ${FONTS.PRIMARY}`
     ctx.textBaseline = 'top'
-
     ctx.fillText(this.text, this.x, this.y)
+    ctx.fill()
   }
 }

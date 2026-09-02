@@ -54,6 +54,10 @@ export class GameObject extends GameObjectEvent {
   x = 0
   y = 0
 
+  collision = {
+    isCollinding: false,
+  }
+
   _innerCollisionArea = null
 
   constructor({ name }) {
@@ -69,7 +73,18 @@ export class GameObject extends GameObjectEvent {
   }
 
   getInnerCollisionArea() {
-    if (!this._innerCollisionArea) return null
+    if (!this._innerCollisionArea) {
+      if (this.width != null && this.height != null) {
+        return {
+          x: this.x,
+          y: this.y,
+          width: this.width,
+          height: this.height,
+        }
+      }
+
+      return null
+    }
 
     const x = this.x + this._innerCollisionArea.x
     const y = this.y + this._innerCollisionArea.y
@@ -115,21 +130,42 @@ export class GameObject extends GameObjectEvent {
       )
     }
 
-    const gameObjCollisionArea = gameObject.getInnerCollisionArea()
     const thisObjCollisionArea = this.getInnerCollisionArea()
+    const gameObjCollisionArea = gameObject.getInnerCollisionArea()
 
-    const coliddedOnX =
-      thisObjCollisionArea.x >= gameObjCollisionArea.x &&
+    const collidedOnX =
+      thisObjCollisionArea.x + thisObjCollisionArea.width >=
+        gameObjCollisionArea.x &&
       thisObjCollisionArea.x <=
         gameObjCollisionArea.x + gameObjCollisionArea.width
 
-    const coliddedOnY =
-      thisObjCollisionArea.y <= gameObjCollisionArea.y &&
+    const collidedOnY =
+      thisObjCollisionArea.y <=
+        gameObjCollisionArea.y + gameObjCollisionArea.height &&
       gameObjCollisionArea.y <=
         thisObjCollisionArea.y + thisObjCollisionArea.height
 
+    const collisionDetected = collidedOnX && collidedOnY
+
+    let collided = false
+
+    if (collisionDetected && this.collision.isCollinding) {
+      collided = false
+    }
+
+    if (!collisionDetected && this.collision.isCollinding) {
+      collided = false
+      this.collision.isCollinding = false
+    }
+
+    if (collisionDetected && !this.collision.isCollinding) {
+      collided = true
+      this.collision.isCollinding = true
+    }
+
     return {
-      colidded: coliddedOnX && coliddedOnY,
+      collided,
+      isCollinding: this.collision.isCollinding,
     }
   }
 }

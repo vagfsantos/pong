@@ -5,6 +5,7 @@ export const BOARD_SETTINGS = {
 
 export const COLORS = {
   PRIMARY: '#9b4646',
+  PRIMARY_DARK: '#893737',
   HIGHLIGHT: '#d9dd2a',
   LIGHT: '#ffffff',
   DARK: '#000000',
