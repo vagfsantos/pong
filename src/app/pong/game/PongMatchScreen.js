@@ -15,6 +15,8 @@ export class PongMatchScreen {
     text: '0x0',
     fontSize: 72,
     fontColor: COLORS.PRIMARY_DARK,
+    textBaseline: 'middle',
+    textAlign: 'center',
   })
 
   _onScoreCallbacks = []
@@ -54,8 +56,8 @@ export class PongMatchScreen {
     this.machine.setCoordinates({ x: BOARD_SETTINGS.WIDTH - 54, y: halfHeight })
 
     this.score.setCoordinates({
-      x: 307,
-      y: 255,
+      x: BOARD_SETTINGS.WIDTH / 2,
+      y: BOARD_SETTINGS.HEIGHT / 2,
     })
 
     this.playerScoreWall.setCoordinates({ y: 0, x: 0 })
