@@ -2,7 +2,10 @@ import { GAME_OBJECT_TYPES, GameObject } from '@game-engine/GameObject'
 import { BALL, BOARD_SETTINGS, COLORS } from '@pong/constants/pong-consts'
 
 const getXDirection = () => {
-  return 1
+  return -1
+}
+const getYDirection = () => {
+  return Math.random()
 }
 
 export class PongBall extends GameObject {
@@ -10,9 +13,8 @@ export class PongBall extends GameObject {
 
   x = BOARD_SETTINGS.WIDTH / 2 - BALL.RADIUS
   y = BOARD_SETTINGS.HEIGHT / 2 - BALL.RADIUS
-
-  speed = 5
-  directionY = Math.random()
+  speed = 3
+  directionY = getYDirection()
   directionX = getXDirection()
 
   _onUpdateCallbacks = []
@@ -23,10 +25,6 @@ export class PongBall extends GameObject {
 
     if (hasHitGround || hasHitCelling) {
       this.directionY *= -1
-    }
-
-    if (this.x + this.width >= BOARD_SETTINGS.WIDTH) {
-      this.directionX *= -1
     }
   }
 
@@ -41,6 +39,14 @@ export class PongBall extends GameObject {
   // yHitNumber: A number between 0 and 1
   reverseDirectionX({ yHitNumber }) {
     this.directionX = yHitNumber * (this.directionX > 0 ? -1 : 1)
+  }
+
+  reset() {
+    this.x = BOARD_SETTINGS.WIDTH / 2 - BALL.RADIUS
+    this.y = BOARD_SETTINGS.HEIGHT / 2 - BALL.RADIUS
+    this.speed = 5
+    this.directionY = getYDirection()
+    this.directionX = getXDirection()
   }
 
   update() {

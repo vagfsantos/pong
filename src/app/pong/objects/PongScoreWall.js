@@ -4,7 +4,7 @@ import { BOARD_SETTINGS, COLORS } from '@pong/constants/pong-consts'
 export class PongScoreWall extends GameObject {
   type = GAME_OBJECT_TYPES.STATIC
 
-  width = 20
+  width = 10
   height = BOARD_SETTINGS.HEIGHT
 
   render({ gameCanvas }) {

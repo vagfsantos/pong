@@ -60,10 +60,13 @@ export class PongMatchScreen {
       y: BOARD_SETTINGS.HEIGHT / 2,
     })
 
-    this.playerScoreWall.setCoordinates({ y: 0, x: 0 })
+    this.playerScoreWall.setCoordinates({
+      y: 0,
+      x: -this.playerScoreWall.width - BALL.RADIUS * 2,
+    })
     this.machineScoreWall.setCoordinates({
       y: 0,
-      x: BOARD_SETTINGS.WIDTH - this.machineScoreWall.width,
+      x: BOARD_SETTINGS.WIDTH + BALL.RADIUS * 2,
     })
   }
 
@@ -111,7 +114,7 @@ export class PongMatchScreen {
       })
 
     if (collidedWithPlayerWall) {
-      this._alertScore({ scoreOwner: 'machine' })
+      this._confirmScore({ scoreOwner: 'machine' })
     }
 
     const { collided: collidedWithMchineWall } =
@@ -120,14 +123,19 @@ export class PongMatchScreen {
       })
 
     if (collidedWithMchineWall) {
-      this._alertScore({ scoreOwner: 'player' })
+      this._confirmScore({ scoreOwner: 'player' })
     }
   }
 
-  _alertScore({ scoreOwner }) {
+  _confirmScore({ scoreOwner }) {
+    this._relaunchBall()
     this._onScoreCallbacks.forEach((callback) => {
       callback({ scoreOwner })
     })
+  }
+
+  _relaunchBall() {
+    this.ball.reset()
   }
 
   _setupEvents() {
