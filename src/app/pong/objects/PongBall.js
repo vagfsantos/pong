@@ -13,7 +13,7 @@ export class PongBall extends GameObject {
 
   x = BOARD_SETTINGS.WIDTH / 2 - BALL.RADIUS
   y = BOARD_SETTINGS.HEIGHT / 2 - BALL.RADIUS
-  speed = 3
+  speed = 4
   directionY = getYDirection()
   directionX = getXDirection()
 
@@ -38,13 +38,12 @@ export class PongBall extends GameObject {
 
   // yHitNumber: A number between 0 and 1
   reverseDirectionX({ yHitNumber }) {
-    this.directionX = yHitNumber * (this.directionX > 0 ? -1 : 1)
+    this.directionX = this.directionX * -1
   }
 
   reset() {
     this.x = BOARD_SETTINGS.WIDTH / 2 - BALL.RADIUS
     this.y = BOARD_SETTINGS.HEIGHT / 2 - BALL.RADIUS
-    this.speed = 5
     this.directionY = getYDirection()
     this.directionX = getXDirection()
   }

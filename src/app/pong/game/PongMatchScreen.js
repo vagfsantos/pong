@@ -1,4 +1,5 @@
 import { BALL, BOARD_SETTINGS, COLORS } from '@pong/constants/pong-consts'
+import { PongMachineAI } from '@pong/game/PongMachineAI'
 import { PongBall } from '@pong/objects/PongBall'
 import { PongPlayer } from '@pong/objects/PongPlayer'
 import { PongScoreWall } from '@pong/objects/PongScoreWall'
@@ -19,15 +20,19 @@ export class PongMatchScreen {
     textAlign: 'center',
   })
 
+  machineAI = null
+
   _onScoreCallbacks = []
 
   show() {
     this.__setupInitialObjectLocation()
     this._setupObjectCollisions()
     this._setupEvents()
+    this._setupMachinePlayerAI()
 
     this.ball.onUpdate(() => {
       this._onBallCollision()
+      this.machineAI.move()
     })
   }
 
@@ -52,8 +57,14 @@ export class PongMatchScreen {
 
   __setupInitialObjectLocation() {
     const halfHeight = BOARD_SETTINGS.HEIGHT / 2 - this.player.height / 2
-    this.player.setCoordinates({ x: 54, y: halfHeight })
-    this.machine.setCoordinates({ x: BOARD_SETTINGS.WIDTH - 54, y: halfHeight })
+    this.player.setCoordinates({
+      x: BOARD_SETTINGS.PLAYER_GAP_FROM_WALL,
+      y: halfHeight,
+    })
+    this.machine.setCoordinates({
+      x: BOARD_SETTINGS.WIDTH - BOARD_SETTINGS.PLAYER_GAP_FROM_WALL,
+      y: halfHeight,
+    })
 
     this.score.setCoordinates({
       x: BOARD_SETTINGS.WIDTH / 2,
@@ -153,6 +164,13 @@ export class PongMatchScreen {
         if (rawEvent.code === 'ArrowUp') this.player.stopMove('up')
         if (rawEvent.code === 'ArrowDown') this.player.stopMove('down')
       },
+    })
+  }
+
+  _setupMachinePlayerAI() {
+    this.machineAI = new PongMachineAI({
+      pongBall: this.ball,
+      playerObject: this.machine,
     })
   }
 }

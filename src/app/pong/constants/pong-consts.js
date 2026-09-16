@@ -1,6 +1,7 @@
 export const BOARD_SETTINGS = {
   WIDTH: 800,
   HEIGHT: 600,
+  PLAYER_GAP_FROM_WALL: 54,
 }
 
 export const COLORS = {

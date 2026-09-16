@@ -11,6 +11,8 @@ export class PongPlayer extends GameObject {
   moveDirection = 0
   isMoving = false
 
+  _autoMoveTargetY = null
+
   beginMove(direction) {
     if (direction === 'up') this.moveDirection = -1
     else this.moveDirection = 1
@@ -34,10 +36,38 @@ export class PongPlayer extends GameObject {
     if (canMoveDown) this.y += this.moveSpeed
   }
 
+  goTo({ yTarget }) {
+    this._autoMoveTargetY = yTarget
+
+    if (yTarget > this.y) {
+      this.beginMove('down')
+    }
+
+    if (yTarget < this.y) {
+      this.beginMove('up')
+    }
+  }
+
+  isBetweenYTarget() {
+    if (this._autoMoveTargetY === null) return false
+
+    const rangeSize = this.height
+    const middlePoint = this.y + rangeSize / 2
+    const rangeMin = this._autoMoveTargetY - rangeSize / 4
+    const rangeMax = this._autoMoveTargetY + rangeSize / 4
+
+    return middlePoint > rangeMin && middlePoint < rangeMax
+  }
+
   update() {
     if (this.isMoving) {
       if (this.moveDirection === 1) this.moveDown()
       if (this.moveDirection === -1) this.moveUp()
+
+      if (this.isBetweenYTarget()) {
+        this.stopMove()
+        this._autoMoveTargetY = null
+      }
     }
   }
 
