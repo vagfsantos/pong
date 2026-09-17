@@ -1,0 +1,2 @@
+*{box-sizing:border-box;margin:0;padding:0}body{color:#fff;background-color:#9b4646}#canvas-placeholder{justify-content:center;align-items:center;height:100vh;display:flex}#canvas-placeholder canvas{border:2px solid #893e3e}.rules{flex-direction:column;justify-content:center;align-items:center;width:40px;height:100vh;display:flex;position:absolute;top:0;right:0}.rules div{border:2px solid #893e3e;width:40px;height:100px}
+/*# sourceMappingURL=pong.19353ada.css.map */
