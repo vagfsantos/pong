@@ -5,7 +5,7 @@ export class PongScoreWall extends GameObject {
   type = GAME_OBJECT_TYPES.STATIC
 
   width = 10
-  height = BOARD_SETTINGS.HEIGHT
+  height = BOARD_SETTINGS.HEIGHT * 2 // increment heignt to catch offscreen colissions
 
   render({ gameCanvas }) {
     // const ctx = gameCanvas.getCanvasContext()

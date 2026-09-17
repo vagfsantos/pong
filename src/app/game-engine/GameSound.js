@@ -18,12 +18,16 @@ export class GameSound {
     this._loadedAudios[id] = audioBuffer
   }
 
-  async playSound({ id, loop = false }) {
+  async playSound({ id, loop = false, gain = 1 }) {
     const audioBufferSource = this._audioCtx.createBufferSource()
+    const gainNode = this._audioCtx.createGain()
     audioBufferSource.buffer = this._loadedAudios[id]
 
+    gainNode.gain.value = gain
+
     audioBufferSource.loop = loop
-    audioBufferSource.connect(this._audioCtx.destination)
+    audioBufferSource.connect(gainNode)
+    gainNode.connect(this._audioCtx.destination)
     audioBufferSource.start(0)
   }
 }

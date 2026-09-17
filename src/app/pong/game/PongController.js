@@ -1,8 +1,9 @@
 import { GameCanvas } from '@game-engine/GameCanvas'
 import { GameController } from '@game-engine/GameController'
 import { GameRenderEngine } from '@game-engine/GameEngine'
-import { BOARD_SETTINGS } from '@pong/constants/pong-consts'
+import { BOARD_SETTINGS, PLAYER_TYPE } from '@pong/constants/pong-consts'
 import { PongMatchScreen } from '@pong/game/PongMatchScreen'
+import { PongSound } from '@pong/game/PongSound'
 import { PongStartScreen } from '@pong/game/PongStartScreen'
 import { PongUX } from '@pong/game/PongUX'
 
@@ -13,10 +14,11 @@ export class PongController {
 
   StartScreen = new PongStartScreen()
   MatchScreen = new PongMatchScreen()
+  Sound = new PongSound()
 
   gameScore = {
-    player: 0,
-    machine: 0,
+    [PLAYER_TYPE.USER]: 0,
+    [PLAYER_TYPE.MACHINE]: 0,
   }
 
   init() {
@@ -59,16 +61,27 @@ export class PongController {
       gameObject.watchForEvents({ gameCanvas: this.Canvas.getCanvas() })
     })
 
-    this.MatchScreen.onScore(({ scoreOwner }) => {
-      this.gameScore[scoreOwner] = this.gameScore[scoreOwner] + 1
-      this.MatchScreen.updateScore({
-        player: this.gameScore.player,
-        machine: this.gameScore.machine,
-      })
+    this.MatchScreen.onPlayerHitsBall(({ playerType }) => {
+      if (playerType === PLAYER_TYPE.USER) this.Sound.playUserHitPlaySound()
+      if (playerType === PLAYER_TYPE.MACHINE)
+        this.Sound.playMachineHitPlaySound()
+    })
+
+    this.MatchScreen.onScore(({ playerType }) => {
+      this.gameScore[playerType] = this.gameScore[playerType] + 1
+      this.Sound.playScoreSound()
+
+      this.MatchScreen.updateScore(this.gameScore)
     })
   }
 
   _setupUX() {
+    this.UX.onDOMIsReady(() => {
+      this.Sound.loadAllSounds().then(() => {
+        this.Sound.playBackgroundSound()
+      })
+    })
+
     this.UX.init({ gameCanvas: this.Canvas.getCanvas() })
   }
 }

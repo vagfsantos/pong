@@ -163,9 +163,19 @@ export class GameObject extends GameObjectEvent {
       this.collision.isCollinding = true
     }
 
+    const whereCollidedOnThisObj = collided
+      ? {
+          x: gameObjCollisionArea.x - thisObjCollisionArea.x,
+          y: gameObjCollisionArea.y - thisObjCollisionArea.y,
+        }
+      : null
+
+    console.log({ whereCollidedOnThisObj })
+
     return {
       collided,
       isCollinding: this.collision.isCollinding,
+      whereCollided: whereCollidedOnThisObj,
     }
   }
 }

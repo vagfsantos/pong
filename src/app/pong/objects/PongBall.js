@@ -8,12 +8,14 @@ const getYDirection = () => {
   return Math.random()
 }
 
+const INITIAL_SPEED = 4
+
 export class PongBall extends GameObject {
   type = GAME_OBJECT_TYPES.DYNAMIC
 
   x = BOARD_SETTINGS.WIDTH / 2 - BALL.RADIUS
   y = BOARD_SETTINGS.HEIGHT / 2 - BALL.RADIUS
-  speed = 4
+  speed = INITIAL_SPEED
   directionY = getYDirection()
   directionX = getXDirection()
 
@@ -36,9 +38,11 @@ export class PongBall extends GameObject {
     this._onUpdateCallbacks.push(callback)
   }
 
-  // yHitNumber: A number between 0 and 1
-  reverseDirectionX({ yHitNumber }) {
+  // yPlayerHitRatio: A number between 0 and 1
+  reverseDirectionWith({ yPlayerHitRatio }) {
     this.directionX = this.directionX * -1
+    this.directionY =
+      this.directionY > 0 ? yPlayerHitRatio : yPlayerHitRatio * -1
   }
 
   reset() {
@@ -46,6 +50,11 @@ export class PongBall extends GameObject {
     this.y = BOARD_SETTINGS.HEIGHT / 2 - BALL.RADIUS
     this.directionY = getYDirection()
     this.directionX = getXDirection()
+    this.speed = INITIAL_SPEED
+  }
+
+  incrementSpeed() {
+    this.speed *= 1.04 // percentage increase
   }
 
   update() {

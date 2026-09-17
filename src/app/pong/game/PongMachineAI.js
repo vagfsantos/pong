@@ -16,9 +16,7 @@ export class PongMachineAI {
     }
     if (this.askedMachineToMove) return
     if (this.pongBall.x < BOARD_SETTINGS.WIDTH / 2) return // ball is not on the middle of screen
-
     const futurePointY = this.getWhereBallWillHitY()
-
     this.moveMachine({ yTarget: futurePointY })
   }
 

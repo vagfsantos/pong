@@ -19,3 +19,8 @@ export const FONTS = {
 export const BALL = {
   RADIUS: 10,
 }
+
+export const PLAYER_TYPE = {
+  USER: 'user',
+  MACHINE: 'machine',
+}

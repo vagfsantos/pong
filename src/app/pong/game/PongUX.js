@@ -1,9 +1,18 @@
 export class PongUX {
   DOM = {}
+  onDOMIsReadyCallbackList = []
 
   init({ gameCanvas }) {
     this._setupDOM()
-    this._appendCanvasToDOM({ gameCanvas })
+
+    window.onload = () => {
+      this._appendCanvasToDOM({ gameCanvas })
+      this._runOnDOMIsReadyCallbacks()
+    }
+  }
+
+  onDOMIsReady(callback) {
+    this.onDOMIsReadyCallbackList.push(callback)
   }
 
   _setupDOM() {
@@ -12,5 +21,11 @@ export class PongUX {
 
   _appendCanvasToDOM({ gameCanvas }) {
     this.DOM.canvasPlaceholder.appendChild(gameCanvas)
+  }
+
+  _runOnDOMIsReadyCallbacks() {
+    this.onDOMIsReadyCallbackList.forEach((callback) => {
+      callback()
+    })
   }
 }
